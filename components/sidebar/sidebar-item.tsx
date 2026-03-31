@@ -24,7 +24,7 @@ export function SidebarMenuItemWithHighlight({
       className={cn(
         isActive &&
           "bg-[var(--grayza-accent-subtle)] text-[var(--grayza-accent)] border border-[var(--grayza-border-accent)] shadow-[0_0_12px_var(--grayza-accent-glow)]",
-        "font-medium rounded-[7px] transition-all duration-[var(--duration-base)]",
+        "font-medium rounded-[7px] transition-all duration-200",
         className
       )}
       {...props}
