@@ -51,10 +51,12 @@ export function AppSidebar({
       <Sidebar variant="inset" collapsible="icon">
         <SidebarHeader>
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo/256.png" alt="Logo" className="h-10 w-10 rounded-lg" width={40} height={40} />
+            <div className="relative h-10 w-10 rounded-lg bg-gradient-to-br from-[#2A7A4A] to-[#1A4A2C] border border-[var(--grayza-border-accent)] shadow-[0_0_12px_var(--grayza-accent-glow)] flex items-center justify-center overflow-hidden">
+              <Image src="/logo/256.png" alt="Logo" className="h-10 w-10 rounded-lg" width={40} height={40} />
+            </div>
             <div className="grid flex-1 text-left leading-tight">
-              <span className="truncate font-semibold text-lg">
-                <ColoredText>{config.app.title}</ColoredText>
+              <span className="truncate font-display font-bold text-lg text-[var(--grayza-accent)]">
+                {config.app.title}
               </span>
             </div>
           </Link>
@@ -97,7 +99,7 @@ export function AppSidebar({
                       <ClockArrowUp />
                       <span>Unsorted</span>
                       {unsortedFilesCount > 0 && (
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
+                        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--grayza-accent-subtle)] border border-[var(--grayza-border-accent)] text-xs font-mono font-medium text-[var(--grayza-accent)]">
                           {unsortedFilesCount}
                         </span>
                       )}

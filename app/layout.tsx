@@ -1,6 +1,28 @@
 import config from "@/lib/config"
 import type { Metadata, Viewport } from "next"
+import { DM_Mono, DM_Sans, Outfit } from "next/font/google"
 import "./globals.css"
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+  variable: "--font-sans",
+})
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-display",
+})
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-mono",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -35,17 +57,15 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#080E0A",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-white antialiased">{children}</body>
+    <html lang="en" className={`${dmSans.variable} ${outfit.variable} ${dmMono.variable}`}>
+      <body className="min-h-screen font-sans antialiased grayza-noise">{children}</body>
     </html>
   )
 }

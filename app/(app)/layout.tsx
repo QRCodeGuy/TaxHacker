@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#080E0A",
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -64,5 +64,3 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </NotificationProvider>
   )
 }
-
-export const dynamic = "force-dynamic"

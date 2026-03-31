@@ -1,7 +1,9 @@
 import { ChatOpenAI } from "@langchain/openai"
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai"
 import { ChatMistralAI } from "@langchain/mistralai"
+import { BaseChatModel } from "@langchain/core/language_models/chat_models"
 import { BaseMessage, HumanMessage } from "@langchain/core/messages"
+import { AnalyzeAttachment } from "../attachments"
 
 export type LLMProvider = "openai" | "google" | "mistral" | "openai_compatible"
 
@@ -19,7 +21,7 @@ export interface LLMSettings {
 export interface LLMRequest {
   prompt: string
   schema?: Record<string, unknown>
-  attachments?: any[]
+  attachments?: AnalyzeAttachment[]
 }
 
 export interface LLMResponse {
@@ -29,72 +31,81 @@ export interface LLMResponse {
   error?: string
 }
 
-async function requestLLMUnified(config: LLMConfig, req: LLMRequest): Promise<LLMResponse> {
-  try {
-    const temperature = 0
-    let model: any
-    if (config.provider === "openai") {
-      model = new ChatOpenAI({
+type MessageContent = { type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }
+
+function createModel(config: LLMConfig): BaseChatModel | null {
+  const temperature = 0
+
+  switch (config.provider) {
+    case "openai":
+      return new ChatOpenAI({
         apiKey: config.apiKey,
         model: config.model,
-        temperature: temperature,
+        temperature,
       })
-    } else if (config.provider === "google") {
-      model = new ChatGoogleGenerativeAI({
+    case "google":
+      return new ChatGoogleGenerativeAI({
         apiKey: config.apiKey,
         model: config.model,
-        temperature: temperature,
+        temperature,
       })
-    } else if (config.provider === "mistral") {
-      model = new ChatMistralAI({
+    case "mistral":
+      return new ChatMistralAI({
         apiKey: config.apiKey,
         model: config.model,
-        temperature: temperature,
+        temperature,
       })
-    } else if (config.provider === "openai_compatible") {
-      model = new ChatOpenAI({
+    case "openai_compatible":
+      return new ChatOpenAI({
         apiKey: config.apiKey || "not-needed",
         model: config.model,
-        temperature: temperature,
+        temperature,
         configuration: {
           baseURL: config.baseUrl?.trim(),
         },
       })
-    } else {
-      return {
-        output: {},
-        provider: config.provider,
-        error: "Unknown provider",
-      }
-    }
+    default:
+      return null
+  }
+}
 
-    let message_content: any = [{ type: "text", text: req.prompt }]
-    if (req.attachments && req.attachments.length > 0) {
-      const images = req.attachments.map((att) => ({
+function buildMessageContent(req: LLMRequest): MessageContent[] {
+  const content: MessageContent[] = [{ type: "text", text: req.prompt }]
+
+  if (req.attachments && req.attachments.length > 0) {
+    for (const att of req.attachments) {
+      content.push({
         type: "image_url",
-        image_url: {
-          url: `data:${att.contentType};base64,${att.base64}`,
-        },
-      }))
-      message_content.push(...images)
+        image_url: { url: `data:${att.contentType};base64,${att.base64}` },
+      })
     }
-    const messages: BaseMessage[] = [new HumanMessage({ content: message_content })]
+  }
 
-    let response: any
+  return content
+}
+
+async function requestLLMUnified(config: LLMConfig, req: LLMRequest): Promise<LLMResponse> {
+  try {
+    const model = createModel(config)
+    if (!model) {
+      return { output: {}, provider: config.provider, error: "Unknown provider" }
+    }
+
+    const content = buildMessageContent(req)
+    const messages: BaseMessage[] = [new HumanMessage({ content })]
+
+    let response: Record<string, string>
     if (config.provider === "openai_compatible") {
       const raw = await model.invoke(messages)
-      const text = typeof raw.content === "string" ? raw.content : raw.content.map((c: any) => c.text || "").join("")
+      const text = typeof raw.content === "string" ? raw.content : (raw.content as Array<{ text?: string }>).map((c) => c.text || "").join("")
       response = JSON.parse(text.replace(/```(?:json)?\s*/g, "").trim())
     } else {
-      const structuredModel = model.withStructuredOutput(req.schema, { name: "transaction" })
-      response = await structuredModel.invoke(messages)
+      const structuredModel = model.withStructuredOutput(req.schema!, { name: "transaction" })
+      response = await structuredModel.invoke(messages) as Record<string, string>
     }
 
-    return {
-      output: response,
-      provider: config.provider,
-    }
-  } catch (error: any) {
+    return { output: response, provider: config.provider }
+  } catch (error: unknown) {
     return {
       output: {},
       provider: config.provider,

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Manage your transactions",
 }
 
-const TRANSACTIONS_PER_PAGE = 500
+const TRANSACTIONS_PER_PAGE = 50
 
 export default async function TransactionsPage({ searchParams }: { searchParams: Promise<TransactionFilters> }) {
   const { page, ...filters } = await searchParams
@@ -42,8 +42,8 @@ export default async function TransactionsPage({ searchParams }: { searchParams:
     <>
       <header className="flex flex-wrap items-center justify-between gap-2 mb-8">
         <h2 className="flex flex-row gap-3 md:gap-5">
-          <span className="text-3xl font-bold tracking-tight">Transactions</span>
-          <span className="text-3xl tracking-tight opacity-20">{total}</span>
+          <span className="text-3xl font-display font-bold tracking-tight">Transactions</span>
+          <span className="text-3xl font-mono tracking-tight text-muted-foreground">{total}</span>
         </h2>
         <div className="flex gap-2">
           <ExportTransactionsDialog fields={fields} categories={categories} projects={projects} total={total}>

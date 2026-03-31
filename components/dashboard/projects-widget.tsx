@@ -14,71 +14,65 @@ export function ProjectsWidget({
   statsPerProject: Record<string, ProjectStats>
 }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-3 md:grid-cols-2">
       {projects.map((project) => (
         <Link key={project.code} href={`/transactions?projectCode=${project.code}`}>
-          <Card className="bg-gradient-to-tr from-white via-slate-50/40 to-purple-50/30 border-slate-200/60 hover:shadow-xl transition-all duration-500 hover:scale-[1.01] group cursor-pointer">
-            <CardHeader className="group-hover:translate-y-[-2px] transition-transform duration-300">
+          <Card className="grayza-card cursor-pointer">
+            <CardHeader>
               <CardTitle>
                 <Badge
-                  className="text-lg shadow-md hover:shadow-lg transition-all duration-300"
+                  className="text-sm font-mono"
                   style={{ backgroundColor: project.color }}
                 >
                   {project.name}
                 </Badge>
               </CardTitle>
             </CardHeader>
-            <CardContent className="group-hover:translate-y-[-1px] transition-transform duration-300">
+            <CardContent>
               <div className="flex flex-wrap gap-4 justify-between items-center">
-                <div className="bg-gradient-to-br from-green-50/80 to-emerald-50/60 p-3 rounded-xl border border-green-100/50">
-                  <div className="text-sm font-medium text-muted-foreground">Income</div>
-                  <div className="text-2xl font-bold text-green-500">
+                <div className="bg-emerald-500/5 p-3 rounded-lg border border-emerald-500/10">
+                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Income</div>
+                  <div className="text-xl font-mono font-bold text-emerald-400">
                     {Object.entries(statsPerProject[project.code]?.totalIncomePerCurrency).map(([currency, total]) => (
-                      <div
-                        key={currency}
-                        className="flex flex-col gap-2 font-bold text-green-500 text-base first:text-2xl"
-                      >
+                      <div key={currency} className="flex flex-col gap-1 font-mono font-bold text-emerald-400 text-sm first:text-xl">
                         {formatCurrency(total, currency)}
                       </div>
                     ))}
                     {!Object.entries(statsPerProject[project.code]?.totalIncomePerCurrency).length && (
-                      <div className="font-bold text-base first:text-2xl">0.00</div>
+                      <div className="font-mono font-bold text-sm first:text-xl text-muted-foreground">0.00</div>
                     )}
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-red-50/80 to-rose-50/60 p-3 rounded-xl border border-red-100/50">
-                  <div className="text-sm font-medium text-muted-foreground">Expenses</div>
-                  <div className="text-2xl font-bold text-red-500">
+                <div className="bg-red-500/5 p-3 rounded-lg border border-red-500/10">
+                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Expenses</div>
+                  <div className="text-xl font-mono font-bold text-red-400">
                     {Object.entries(statsPerProject[project.code]?.totalExpensesPerCurrency).map(
                       ([currency, total]) => (
-                        <div
-                          key={currency}
-                          className="flex flex-col gap-2 font-bold text-red-500 text-base first:text-2xl"
-                        >
+                        <div key={currency} className="flex flex-col gap-1 font-mono font-bold text-red-400 text-sm first:text-xl">
                           {formatCurrency(total, currency)}
                         </div>
                       )
                     )}
                     {!Object.entries(statsPerProject[project.code]?.totalExpensesPerCurrency).length && (
-                      <div className="font-bold text-base first:text-2xl">0.00</div>
+                      <div className="font-mono font-bold text-sm first:text-xl text-muted-foreground">0.00</div>
                     )}
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-violet-50/80 to-indigo-50/60 p-3 rounded-xl border border-violet-100/50">
-                  <div className="text-sm font-medium text-muted-foreground">Profit</div>
-                  <div className="text-2xl font-bold">
+                <div className="bg-[var(--grayza-accent-subtle)] p-3 rounded-lg border border-[var(--grayza-border-accent)]/50">
+                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Profit</div>
+                  <div className="text-xl font-mono font-bold">
                     {Object.entries(statsPerProject[project.code]?.profitPerCurrency).map(([currency, total]) => (
                       <div
                         key={currency}
-                        className={`flex flex-col gap-2 items-center text-2xl font-bold ${
-                          total >= 0 ? "text-green-500" : "text-red-500"
+                        className={`flex flex-col gap-1 items-center text-xl font-mono font-bold ${
+                          total >= 0 ? "text-emerald-400" : "text-red-400"
                         }`}
                       >
                         {formatCurrency(total, currency)}
                       </div>
                     ))}
                     {!Object.entries(statsPerProject[project.code]?.profitPerCurrency).length && (
-                      <div className="text-2xl font-bold">0.00</div>
+                      <div className="text-xl font-mono font-bold text-muted-foreground">0.00</div>
                     )}
                   </div>
                 </div>
@@ -89,10 +83,10 @@ export function ProjectsWidget({
       ))}
       <Link
         href="/settings/projects"
-        className="flex items-center justify-center gap-2 border-dashed border-2 border-gradient-to-r rounded-lg p-6 text-muted-foreground transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group"
+        className="flex items-center justify-center gap-2 border-dashed border border-border rounded-[10px] p-6 text-muted-foreground transition-all duration-200 hover:border-[var(--grayza-border-accent)] hover:text-[var(--grayza-accent)] group"
       >
-        <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
-        <span className="font-medium">Create New Project</span>
+        <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
+        <span className="font-medium text-sm">Create New Project</span>
       </Link>
     </div>
   )

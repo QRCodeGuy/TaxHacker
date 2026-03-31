@@ -34,13 +34,13 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const getBannerStyles = (type: BannerType = "default") => {
     switch (type) {
       case "success":
-        return "bg-green-500 text-teal-50"
+        return "bg-emerald-500/90 text-white backdrop-blur-sm"
       case "deleted":
-        return "bg-black text-white"
+        return "bg-[#121D15] text-white border border-[rgba(255,255,255,0.08)]"
       case "failed":
-        return "bg-red-500 text-white"
+        return "bg-red-500/90 text-white backdrop-blur-sm"
       case "default":
-        return "bg-white text-black"
+        return "bg-[#172219] text-white border border-[rgba(255,255,255,0.08)]"
     }
   }
 

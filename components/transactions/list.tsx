@@ -92,7 +92,7 @@ export const standardFieldRenderers: Record<string, FieldRenderer> = {
       <div className="text-right text-lg">
         <div
           className={cn(
-            { income: "text-green-500", expense: "text-red-500", other: "text-black" }[transaction.type || "other"],
+            { income: "text-emerald-400", expense: "text-red-400", other: "text-muted-foreground" }[transaction.type || "other"],
             "flex flex-col justify-end"
           )}
         >
@@ -122,7 +122,7 @@ export const standardFieldRenderers: Record<string, FieldRenderer> = {
             {Object.entries(netTotalPerCurrency).map(([currency, total]) => (
               <dd
                 key={`net-${currency}`}
-                className={cn("text-sm first:text-base font-medium", total >= 0 ? "text-green-600" : "text-red-600")}
+                className={cn("text-sm first:text-base font-medium", total >= 0 ? "text-emerald-400" : "text-red-400")}
               >
                 {formatCurrency(total, currency)}
               </dd>
@@ -148,7 +148,7 @@ export const standardFieldRenderers: Record<string, FieldRenderer> = {
     formatValue: (transaction: Transaction) => (
       <div
         className={cn(
-          { income: "text-green-500", expense: "text-red-500", other: "text-black" }[transaction.type || "other"],
+          { income: "text-emerald-400", expense: "text-red-400", other: "text-muted-foreground" }[transaction.type || "other"],
           "flex flex-col justify-end text-right text-lg"
         )}
       >
@@ -298,7 +298,7 @@ export function TransactionList({ transactions, fields = [] }: { transactions: T
             <TableRow
               key={transaction.id}
               className={cn(
-                isTransactionIncomplete(fields, transaction) && "bg-yellow-50",
+                isTransactionIncomplete(fields, transaction) && "bg-amber-500/5",
                 selectedIds.includes(transaction.id) && "bg-muted",
                 "cursor-pointer hover:bg-muted/50"
               )}

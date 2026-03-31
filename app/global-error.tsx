@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import * as Sentry from "@sentry/nextjs"
-import { Ghost } from "lucide-react"
 import Link from "next/link"
 import { useEffect } from "react"
 
@@ -13,12 +12,12 @@ export default function GlobalError({ error }: { error: Error }) {
 
   return (
     <html>
-      <body>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
-          <div className="text-center space-y-4">
-            <Ghost className="w-24 h-24 text-destructive mx-auto" />
-            <h1 className="text-4xl font-bold text-foreground">Oops! Something went wrong</h1>
-            <p className="text-muted-foreground max-w-md mx-auto">
+      <body className="bg-[#080E0A] text-[rgba(255,255,255,0.92)]">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4">
+          <div className="text-center space-y-4 animate-[fadeIn_200ms_ease-out]">
+            <span className="text-6xl block mb-4 opacity-40">⬡</span>
+            <h1 className="text-2xl font-display font-bold">Something went wrong</h1>
+            <p className="text-[rgba(255,255,255,0.60)] max-w-md mx-auto text-sm">
               We apologize for the inconvenience. Our team has been notified and is working to fix the issue.
             </p>
             <div className="pt-4">

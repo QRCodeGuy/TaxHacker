@@ -35,8 +35,10 @@ export async function analyzeTransaction(
     const result = response.output
     const tokensUsed = response.tokensUsed || 0
 
-    console.log("LLM response:", result)
-    console.log("LLM tokens used:", tokensUsed)
+    if (process.env.NODE_ENV === "development") {
+      console.log("LLM response:", result)
+      console.log("LLM tokens used:", tokensUsed)
+    }
 
     await updateFile(fileId, userId, { cachedParseResult: result })
 

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /Users/cameronstallard/TaxHacker/app/\\\\\\(app\\\\\\)/)",
+      "Bash(cat /Users/cameronstallard/TaxHacker/app/\\\\\\(app\\\\\\)/layout.tsx)",
+      "Bash(cat /Users/cameronstallard/TaxHacker/app/\\\\\\(app\\\\\\)/context.tsx)",
+      "Bash(git -C /Users/cameronstallard/TaxHacker log --oneline -10)",
+      "Skill(architecture)",
+      "Skill(architecture:*)",
+      "Skill(clean-code)",
+      "Skill(clean-code:*)"
+    ]
+  }
+}
