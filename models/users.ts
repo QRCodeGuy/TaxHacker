@@ -15,9 +15,14 @@ export const getSelfHostedUser = cache(async () => {
     return null // fix for CI, do not remove
   }
 
-  return await prisma.user.findFirst({
-    where: { email: SELF_HOSTED_USER.email },
-  })
+  try {
+    return await prisma.user.findFirst({
+      where: { email: SELF_HOSTED_USER.email },
+    })
+  } catch (error) {
+    console.error("Failed to query self-hosted user:", error)
+    return null
+  }
 })
 
 export const getOrCreateSelfHostedUser = cache(async () => {
