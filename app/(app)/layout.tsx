@@ -64,3 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </NotificationProvider>
   )
 }
+
+// Required: Supabase pooler is unreachable during Vercel build,
+// so all DB-dependent pages must be rendered at request time
+export const dynamic = "force-dynamic"
