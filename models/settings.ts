@@ -1,52 +1,23 @@
 import { prisma } from "@/lib/db"
-import { PROVIDERS } from "@/lib/llm-providers"
+import config from "@/lib/config"
 import { cache } from "react"
-import { LLMProvider } from "@/ai/providers/llmProvider"
 
 export type SettingsMap = Record<string, string>
 
 /**
- * Helper to extract LLM provider settings from SettingsMap.
+ * LLM settings are now server-side only — API keys come from environment
+ * variables, never from user input or database storage.
+ * Security: prevents API key exposure in client UI.
  */
-export function getLLMSettings(settings: SettingsMap) {
-  const priorities = (settings.llm_providers || "openai,google,mistral,openai_compatible").split(",").map(p => p.trim()).filter(Boolean)
-
-  const providers = priorities.map((provider) => {
-    if (provider === "openai") {
-      return {
-        provider: provider as LLMProvider,
-        apiKey: settings.openai_api_key || "",
-        model: settings.openai_model_name || PROVIDERS[0]['defaultModelName'],
-      }
-    }
-    if (provider === "google") {
-      return {
-        provider: provider as LLMProvider,
-        apiKey: settings.google_api_key || "",
-        model: settings.google_model_name || PROVIDERS[1]['defaultModelName'],
-      }
-    }
-    if (provider === "mistral") {
-      return {
-        provider: provider as LLMProvider,
-        apiKey: settings.mistral_api_key || "",
-        model: settings.mistral_model_name || PROVIDERS[2]['defaultModelName'],
-      }
-    }
-    if (provider === "openai_compatible") {
-      const providerMeta = PROVIDERS.find(p => p.key === "openai_compatible")
-      return {
-        provider: provider as LLMProvider,
-        apiKey: settings.openai_compatible_api_key || "",
-        model: settings.openai_compatible_model_name || "",
-        baseUrl: settings.openai_compatible_base_url || providerMeta?.defaultBaseUrl || "",
-      }
-    }
-    return null
-  }).filter((provider): provider is NonNullable<typeof provider> => provider !== null)
-
+export function getLLMSettings(_settings: SettingsMap) {
   return {
-    providers,
+    providers: [
+      {
+        provider: "google" as const,
+        apiKey: config.ai.googleApiKey || "",
+        model: config.ai.googleModelName,
+      },
+    ],
   }
 }
 

@@ -8,7 +8,17 @@
       "Skill(architecture)",
       "Skill(architecture:*)",
       "Skill(clean-code)",
-      "Skill(clean-code:*)"
+      "Skill(clean-code:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx -p typescript tsc --noEmit)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(vercel --version)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel inspect:*)",
+      "Bash(vercel logs:*)"
     ]
   }
 }

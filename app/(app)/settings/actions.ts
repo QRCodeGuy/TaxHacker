@@ -98,7 +98,9 @@ export async function saveProfileAction(
   return { success: true }
 }
 
-export async function addProjectAction(userId: string, data: Prisma.ProjectCreateInput) {
+export async function addProjectAction(_clientUserId: string, data: Prisma.ProjectCreateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = projectFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -116,7 +118,9 @@ export async function addProjectAction(userId: string, data: Prisma.ProjectCreat
   return { success: true, project }
 }
 
-export async function editProjectAction(userId: string, code: string, data: Prisma.ProjectUpdateInput) {
+export async function editProjectAction(_clientUserId: string, code: string, data: Prisma.ProjectUpdateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = projectFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -133,7 +137,9 @@ export async function editProjectAction(userId: string, code: string, data: Pris
   return { success: true, project }
 }
 
-export async function deleteProjectAction(userId: string, code: string) {
+export async function deleteProjectAction(_clientUserId: string, code: string) {
+  const user = await getCurrentUser()
+  const userId = user.id
   try {
     await deleteProject(userId, code)
   } catch (error) {
@@ -143,7 +149,9 @@ export async function deleteProjectAction(userId: string, code: string) {
   return { success: true }
 }
 
-export async function addCurrencyAction(userId: string, data: Prisma.CurrencyCreateInput) {
+export async function addCurrencyAction(_clientUserId: string, data: Prisma.CurrencyCreateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = currencyFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -159,7 +167,9 @@ export async function addCurrencyAction(userId: string, data: Prisma.CurrencyCre
   return { success: true, currency }
 }
 
-export async function editCurrencyAction(userId: string, code: string, data: Prisma.CurrencyUpdateInput) {
+export async function editCurrencyAction(_clientUserId: string, code: string, data: Prisma.CurrencyUpdateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = currencyFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -171,7 +181,9 @@ export async function editCurrencyAction(userId: string, code: string, data: Pri
   return { success: true, currency }
 }
 
-export async function deleteCurrencyAction(userId: string, code: string) {
+export async function deleteCurrencyAction(_clientUserId: string, code: string) {
+  const user = await getCurrentUser()
+  const userId = user.id
   try {
     await deleteCurrency(userId, code)
   } catch (error) {
@@ -181,7 +193,9 @@ export async function deleteCurrencyAction(userId: string, code: string) {
   return { success: true }
 }
 
-export async function addCategoryAction(userId: string, data: Prisma.CategoryCreateInput) {
+export async function addCategoryAction(_clientUserId: string, data: Prisma.CategoryCreateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = categoryFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -210,7 +224,9 @@ export async function addCategoryAction(userId: string, data: Prisma.CategoryCre
   }
 }
 
-export async function editCategoryAction(userId: string, code: string, data: Prisma.CategoryUpdateInput) {
+export async function editCategoryAction(_clientUserId: string, code: string, data: Prisma.CategoryUpdateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = categoryFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -227,7 +243,9 @@ export async function editCategoryAction(userId: string, code: string, data: Pri
   return { success: true, category }
 }
 
-export async function deleteCategoryAction(userId: string, code: string) {
+export async function deleteCategoryAction(_clientUserId: string, code: string) {
+  const user = await getCurrentUser()
+  const userId = user.id
   try {
     await deleteCategory(userId, code)
   } catch (error) {
@@ -237,7 +255,9 @@ export async function deleteCategoryAction(userId: string, code: string) {
   return { success: true }
 }
 
-export async function addFieldAction(userId: string, data: Prisma.FieldCreateInput) {
+export async function addFieldAction(_clientUserId: string, data: Prisma.FieldCreateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = fieldFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -259,7 +279,9 @@ export async function addFieldAction(userId: string, data: Prisma.FieldCreateInp
   return { success: true, field }
 }
 
-export async function editFieldAction(userId: string, code: string, data: Prisma.FieldUpdateInput) {
+export async function editFieldAction(_clientUserId: string, code: string, data: Prisma.FieldUpdateInput) {
+  const user = await getCurrentUser()
+  const userId = user.id
   const validatedForm = fieldFormSchema.safeParse(data)
 
   if (!validatedForm.success) {
@@ -279,7 +301,9 @@ export async function editFieldAction(userId: string, code: string, data: Prisma
   return { success: true, field }
 }
 
-export async function deleteFieldAction(userId: string, code: string) {
+export async function deleteFieldAction(_clientUserId: string, code: string) {
+  const user = await getCurrentUser()
+  const userId = user.id
   try {
     await deleteField(userId, code)
   } catch (error) {

@@ -1,15 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import * as Sentry from "@sentry/nextjs"
 import Link from "next/link"
-import { useEffect } from "react"
 
 export default function GlobalError({ error }: { error: Error }) {
-  useEffect(() => {
-    Sentry.captureException(error)
-  }, [error])
-
   return (
     <html>
       <body className="bg-[#080E0A] text-[rgba(255,255,255,0.92)]">
@@ -18,7 +12,7 @@ export default function GlobalError({ error }: { error: Error }) {
             <span className="text-6xl block mb-4 opacity-40">⬡</span>
             <h1 className="text-2xl font-display font-bold">Something went wrong</h1>
             <p className="text-[rgba(255,255,255,0.60)] max-w-md mx-auto text-sm">
-              We apologize for the inconvenience. Our team has been notified and is working to fix the issue.
+              An unexpected error occurred. Please try again.
             </p>
             <div className="pt-4">
               <Button asChild>
